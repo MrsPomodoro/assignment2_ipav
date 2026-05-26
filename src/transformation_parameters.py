@@ -19,3 +19,24 @@
 # - computing scaling factor from landmark pairs
 # - computing x- and y-offsets via the half-point method
 # - building the final 3x3 affine transformation matrix
+
+
+
+import numpy as np
+
+
+# Compute the rotation angle between vector A1->B1 (original image) and vector A2->B2 (transformed image).
+def compute_rotation_angle(A1, B1, A2, B2):
+
+    v1 = np.array(B1) - np.array(A1)               # vector from A1 to B1 in original image
+    v2 = np.array(B2) - np.array(A2)               # vector from A2 to B2 in transformed image
+
+    # angle of each vector using arctan2
+    angle_v1 = np.arctan2(v1[1], v1[0])
+    angle_v2 = np.arctan2(v2[1], v2[0])
+
+    # rotation angle = difference between the two angles
+    angle_rad = angle_v2 - angle_v1
+    angle_deg = np.rad2deg(angle_rad)
+
+    return angle_deg
