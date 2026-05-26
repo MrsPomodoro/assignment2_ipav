@@ -49,6 +49,5 @@ def compute_scaling(A1, B1, A2, B2):
     len_v1 = np.linalg.norm(v1)
     len_v2 = np.linalg.norm(v2)
 
-    scale = len_v1 / len_v2
-
+    scale = len_v2 / len_v1
     return scale
