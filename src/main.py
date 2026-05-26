@@ -4,7 +4,7 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 
-from transformation_parameters import compute_rotation_angle, compute_scaling
+from transformation_parameters import compute_rotation_angle, compute_scaling, compute_offset
 
 # ---- test cases for transformation methods ----
 
@@ -50,6 +50,20 @@ A2d = [0, 0]; B2d = [2, 2]
 A1e = [0, 0]; B1e = [0, 1]
 A2e = [0, 0]; B2e = [0, 4]
 
+# ---- test case for offset computation ----
+
+# original vector
+A1 = [0, 0]
+B1 = [2, 0]
+
+# transformed vector
+# translated by (+5, +3)
+A2 = [5, 3]
+B2 = [7, 3]
+
+rotation_angle = 0
+scale = 1
+
 
 
 if __name__ == '__main__':
@@ -92,3 +106,8 @@ if __name__ == '__main__':
     scale = compute_scaling(A1e, B1e, A2e, B2e)
     print(f"Scaling factor: {scale:.2f}")
     print(f"Expected:       4.00\n")
+
+    offset = compute_offset( A1,B1, A2,  B2,  rotation_angle,  scale )
+
+    print(f"Offset vector: {offset}")
+    print(f"Expected:      [5. 3.]")
