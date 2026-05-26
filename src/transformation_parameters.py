@@ -25,7 +25,7 @@
 import numpy as np
 
 
-# Compute the rotation angle between vector A1->B1 (original image) and vector A2->B2 (transformed image).
+# 1. Compute the rotation angle between vector A1->B1 (original image) and vector A2->B2 (transformed image).
 def compute_rotation_angle(A1, B1, A2, B2):
 
     v1 = np.array(B1) - np.array(A1)               # vector from A1 to B1 in original image
@@ -40,3 +40,15 @@ def compute_rotation_angle(A1, B1, A2, B2):
     angle_deg = np.rad2deg(angle_rad)
 
     return angle_deg
+
+## 2. To obtain the scaling one can determine the length ratio of these 2 vectors.
+def compute_scaling(A1, B1, A2, B2):
+    v1 = np.array(B1) - np.array(A1)       # vector from A1 to B1 in original image
+    v2 = np.array(B2) - np.array(A2)       # vector from A2 to B2 in transformed image
+
+    len_v1 = np.linalg.norm(v1)
+    len_v2 = np.linalg.norm(v2)
+
+    scale = len_v1 / len_v2
+
+    return scale
