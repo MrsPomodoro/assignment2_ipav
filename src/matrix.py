@@ -1,8 +1,8 @@
 
 #################################
 # TODO ASSIGNMENT PART 2:
-#  Use the parameters to setup the transformation matrix that likely produced the transformed image in the first place.
-#  Remember, it was a series of several transformations: translation, rotation around image center,
+#  1. Use the parameters to setup the transformation matrix that likely produced the transformed image in the first place.
+#  2. Remember, it was a series of several transformations: translation, rotation around image center,
 #  scaling relative to the image center.
 #################################
 
