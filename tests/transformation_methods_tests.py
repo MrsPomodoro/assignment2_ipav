@@ -1,7 +1,5 @@
 # test_transformation_parameters.py
 # author: Barbara Klimek
-# test_transformation_parameters.py
-# author: Barbara Klimek
 
 from src.transformation_parameters import (
     compute_rotation_angle,
@@ -96,16 +94,16 @@ scale_B2e = [0, 4]
 
 #  offset test
 
-# original vector
 offset_A1 = [0, 0]
 offset_B1 = [2, 0]
 
-# translated by (+5, +3)
 offset_A2 = [5, 3]
 offset_B2 = [7, 3]
 
 offset_rotation_angle = 0
 offset_scale = 1
+
+offset_image_shape = (100, 100)
 
 
 if __name__ == '__main__':
@@ -155,7 +153,6 @@ if __name__ == '__main__':
     print(f"Test 5 result: {scale:.2f}")
     print("Expected:      4.00\n")
 
-
     print("---- OFFSET TEST ----\n")
 
     offset = compute_offset(
@@ -164,7 +161,8 @@ if __name__ == '__main__':
         offset_A2,
         offset_B2,
         offset_rotation_angle,
-        offset_scale
+        offset_scale,
+        offset_image_shape
     )
 
     print(f"Offset vector: {offset}")
