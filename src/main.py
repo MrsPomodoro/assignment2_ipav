@@ -32,7 +32,8 @@ transformed_image = cv2.cvtColor(transformed_image, cv2.COLOR_BGR2RGB)
 
 # manually selected corresponding points
 A1 = [235, 45]; A2 = [125, 95]
-B1 = [275, 335]; B2 = [370, 225]
+B1 = [275, 335]; B2 = [380, 163]    # fixing wrong first manual measurement B2 = [370, 225]
+
 
 #TODO:Use the parameters to setup the transformation matrix that likely produced the transformed image in the first place.
 # - Remember, it was a series of several transformations: translation, rotation around image center, scaling relative to the image center.
@@ -91,21 +92,33 @@ if __name__ == '__main__':
             - img_result.astype(np.float32)
         )
 
-#4. Visualize registration result
+#4. Visualize results
     plt.figure(figsize=(15, 5))
 
+#plot the original image
     plt.subplot(1, 4, 1)
     plt.imshow(original_image)
+    plt.scatter(A1[0], A1[1], s=80)          #visualize the points A1 and B1
+    plt.scatter(B1[0], B1[1], s=80)
+    plt.text(A1[0] + 10, A1[1], "A1", color="white")
+    plt.text(B1[0] + 10, B1[1], "B1", color="white")
     plt.title("Original")
 
+#plot the transformed image
     plt.subplot(1, 4, 2)
     plt.imshow(transformed_image)
+    plt.scatter(A2[0], A2[1],  s=80)              #visualize the points A2 and B3
+    plt.scatter(B2[0], B2[1],  s=80)
+    plt.text(A2[0] - 40, A2[1], "A2", color="white")
+    plt.text(B2[0] - 40, B2[1], "B2", color="white")
     plt.title("Transformed")
 
+#plot the computed result image
     plt.subplot(1, 4, 3)
     plt.imshow(img_result)
     plt.title("Computed Result")
 
+#plot the difference image
     plt.subplot(1, 4, 4)
     plt.imshow(img_difference.astype(np.uint8))
     plt.title("Difference Image")
