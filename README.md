@@ -1,8 +1,6 @@
 # assignment2_ipav
 ## Project Structure
 
-## Project Structure
-
 The project consists of the following modules:
 
 ```text
@@ -48,30 +46,27 @@ This is the main application script.
 - visualizes all required outputs
 
 ### transformation_methods_tests.py
-The tests were used to verify the correctness of the implemented methods.
-
----
+The tests were used to verify the correctness of the implemented methods for gathering the parameters.
 
 # Implementation
 
-## Step 1 - Landmark Selection
+## Step 1:  Points / Landmark Selection
 
-I manually selected two anatomical landmarks in both images:
+I manually selected two anatomical landmarks in both images via cursor and x,y values visible on the figure corner:
 
 - A1 and B1 in the original image
 - A2 and B2 in the transformed image
 
-## Step 2 - Rotation Angle
+## Step 2:  Rotation Angle
 
-The rotation angle was computed from the vectors:
+Then I compute the rotation angle from the vectors:
 
 ```text
 v1 = B1 - A1
 v2 = B2 - A2
 ```
-I found the functions `arctan()` and `arctan2()` in the NumPy documentation.
-After reading about both functions, I decided to use `np.arctan2()` because it correctly handles all vector directions.
-The angle of both vectors was calculated as:
+I found the functions `arctan()` and `arctan2()` in the NumPy documentation.  After reading about both functions, 
+I decided to use `np.arctan2()` because it correctly handles all vector directions. The angle of both vectors was calculated as:
 
 ```python
 angle_v1 = np.arctan2(v1[1], v1[0])
@@ -80,23 +75,22 @@ angle_v2 = np.arctan2(v2[1], v2[0])
 The final rotation angle was obtained from the difference between both angles.
 I implemented the function `compute_rotation_angle()` and created several tests to verify the results.
 
-## Step 3 - Scaling Factor
+## Step 3:  Scaling Factor
 The scaling factor was computed from the ratio of the vector lengths.
 I found two possible approaches:
 
 - `np.sqrt()`
 - `np.linalg.norm()`
 
-After reading the documentation, I decided to use `np.linalg.norm()` because it directly computes the Euclidean vector length.
-The scaling factor was calculated as:
+After reading the documentation, I decided to use `np.linalg.norm()` because it directly. The scaling factor was calculated as:
 
 ```text
 scale = |v2| / |v1|
 ```
 
-While testing, I discovered that I originally used the inverse ratio.
-The tests helped me find the mistake and I corrected the formula.
-I implemented the function `compute_scaling()` and added several tests.
+While testing via test module, I discovered that I originally used the inverse ratio. The tests compared expected values
+that I calculated mathematically and the computed values. The tests helped me find the mistake and I corrected the formula.
+I implemented the function `compute_scaling()`.
 
 ## Step 4 - Offset Computation
 
@@ -120,9 +114,9 @@ Finally:
 offset = HP2 - HP1
 ```
 
-I implemented this procedure in the function `compute_offset()`.
+I implemented this procedure in the function `compute_offset()`. 
 
-## Step 5 - Refactoring
+## Step 5:  Refactoring - Creating Module for parameters methods
 
 After the functions were working correctly, I moved them into a separate module called:
 
@@ -132,9 +126,9 @@ transformation_parameters.py
 
 This made the main script shorter and easier to read.
 
-## Step 6 - Affine Transformation Matrix
+## Step 6: Affine Transformation Matrix
 
-I created a separate module called:
+I created a separate module for metrix logic called:
 
 ```text
 matrix.py
@@ -148,13 +142,7 @@ The affine transformation matrix combines:
 4. translation back to image center
 5. translation offset
 
-The final matrix was constructed as:
-
-```python
-M = T2 @ R @ S @ T1 @ Toffset
-```
-
-## Step 7 - Registration
+## Step 7:  Inverse matrix setup
 
 The inverse matrix was computed using:
 
@@ -170,9 +158,10 @@ cv2.warpAffine()
 
 as suggested in the assignment.
 
-## Step 8 - Verification
+## Step 8:  Verification
 
-To verify the implementation, I checked:
+To verify the implementation, because I got first figure with 3 pictures of original, transformed and result
+images and the result was slightly moved, so I checked:
 
 ```text
 M(A1) = A2
@@ -182,13 +171,14 @@ M_inv(A2) = A1
 M_inv(B2) = B1
 ```
 
-The debug output confirmed that the selected landmarks were transformed correctly.
+The debug output confirmed that the selected landmarks were transformed correctly. I asked AI 
+assistant for possible root causes. (see the attached pdf with conversation - I mentioned it in separate section of the report.
 
-## Step 9 - Difference Image
+## Step 9:  Difference Image
 
 The assignment required a difference image between the original image and the registered image.
 
-I computed it as:
+I looked for some examples how to do it by using Stack Overflow forums. I computed it as:
 
 ```python
 img_difference = np.abs(
@@ -199,7 +189,7 @@ img_difference = np.abs(
 
 The images were converted to `float32` before subtraction to avoid problems with `uint8` overflow and underflow.
 
-## Step 10 - Visualization
+## Step 10:  Visualization
 
 The final visualization contains:
 
@@ -208,15 +198,13 @@ The final visualization contains:
 3. Registered image.
 4. Difference image.
 
-The landmark positions are displayed as overlays according to the assignment requirements.
+The landmark positions are displayed as overlays according to the assignment requirements - I used   plt.scatter() function.
 
----
+# What I tried and how I solved it: 
 
-# What I tried and how I solved it 
+During the testing I noticed that the result image was still slightly shifted compared to the original image.
 
-During testing I noticed that the registered image was still slightly shifted compared to the original image.
-
-To understand the problem, I checked by logs:
+To understand the problem, I checked by printing values as logs :
 
 - rotation angle
 - scaling factor
